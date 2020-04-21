@@ -1,0 +1,23 @@
+This is a project that will test my ability to write an ADT
+using another ADT that I had previously built and tested.
+It will be interesting as it will allow me to build a form of 
+calculator that can handle arbitrarily large numbers by breaking
+them up and storing them in lists.
+
+Thus far I have worked: 9.5 hours
+on this.
+
+List.h
+Header file for List ADT.
+
+List.c
+Previously built ADT with minor adjustments made.
+
+BigInteger.h
+Header file for BigInteger ADT.
+
+BigInteger.c
+ADT that will handle arbitrarily large numbers using my List ADT.
+
+Arithmetic.c
+Client module.

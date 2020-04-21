@@ -41,7 +41,7 @@ int get(List L);
 
 // Returns true (1) iff Lists A and B are in same
 // state, and returns false (0) otherwise.
-int equals(List A, List B);
+int ListEquals(List A, List B);
  
 // Manipulation procedures ----------------------------------------------------
 

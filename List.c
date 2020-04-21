@@ -166,7 +166,7 @@ int get(List L) {
 // equals()
 // Returns true (1) iff Lists A and B are in same
 // state, and returns false (0) otherwise.
-int equals(List A, List B){
+int ListEquals(List A, List B){
    int eL = 0;
    Node N = NULL;
    Node M = NULL;
