@@ -9,6 +9,9 @@
 #include<stdlib.h>
 #include "List.h"
 
+#define POWER 2 
+#define BASE 100
+
 // structs --------------------------------------------------------------------
 
 // private NodeObj type
@@ -464,6 +467,17 @@ void delete(List L) {
 
 // Other Functions ------------------------------------------------------------
 
+// numOfDigits()
+// helper function so print knows how many digits data is holding
+int numOfDigits(ELEMENT_TYPE x) {
+   int count = 0;
+   while(x!= 0) {
+      count++;
+      x/=10;
+   }
+   return count;
+}
+
 // printList()
 // Prints to the file pointed to by out, a
 // string representation of L consisting
@@ -471,14 +485,26 @@ void delete(List L) {
 // with front on left.
 void printList(FILE* out, List L){
    Node N = NULL;
-
    if( L==NULL ){
       printf("List Error: calling printList() on NULL List reference\n");
       exit(1);
    }
-
+   int x;
+   long zero = 0;
    for(N = L->front; N != NULL; N = N->next){
-      fprintf(out ,"%d ", N->data);
+      x = numOfDigits(N->data);
+      if(N->data != zero) {
+         while(x<POWER) {
+            fprintf(out,"0");
+            x++;
+         }
+         fprintf(out ,"%d ", N->data);
+      } else {
+         while(x<POWER) {
+            fprintf(out,"0");
+            x++;
+         }
+      }
    }
 }
 

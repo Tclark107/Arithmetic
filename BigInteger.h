@@ -59,16 +59,39 @@ BigInteger stringToBigInteger(char* s);
 
 // copy()
 // Returns a reference to a new BigInteger object in the same state as N.
-//BigInteger copy(BigInteger N);
+BigInteger copy(BigInteger N);
+
+// add()
+// Places the sum of A and B in the existing BigInteger S, overwriting its
+// current state: S = A + B
+void add(BigInteger S, BigInteger A, BigInteger B);
+
+// sum()
+// Returns a reference to a new BigIntegerobject representing A + B.
+BigInteger sum(BigInteger A, BigInteger B);
+
+// subtract()
+// Places the difference of A and B in the existing BigInteger D, overwriting
+// its current state: D = A - B
+void subtract(BigInteger D, BigInteger A, BigInteger B);
+
+// diff()
+// Returns a reference to a new BigInteger object representing A - B.
+BigInteger diff(BigInteger A, BigInteger B);
+
+// multiply()
+// Places the product of A and B in the existing  BigInteger P, overwriting
+// its current state: P = A * B
+void multiply(BigInteger P, BigInteger A, BigInteger B);
+
+// prod()
+// Returns a reference to a new BigInteger object representing A*B
+BigInteger prod(BigInteger A, BigInteger B);
 
 // Other operations ------------------------------------------------------------
 
 // printBigInteger()
 // Prints a base 10 string representations of N to filestream out.
 void printBigInteger(FILE* out, BigInteger N);
-
-int myPow(int k);
-
-long charToLong(char* s, int i, int x);
 
 #endif

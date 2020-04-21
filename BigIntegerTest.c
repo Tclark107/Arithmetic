@@ -29,5 +29,22 @@ int main(int argc, char* argv[]){
    A = stringToBigInteger("7402779357");
    printBigInteger(stdout,A);
    printf("\n");
-   printf("%d\n",sign(A));
+   //printf("%d\n",sign(A));
+   //B = copy(A);
+   //printBigInteger(stdout,B);
+   //printf("\n");
+   //printf("%d\n",sign(B));
+   B = stringToBigInteger("41085449");
+   printBigInteger(stdout,B);
+   printf("\n");
+
+   BigInteger C = newBigInteger();
+   add(C,A,B);
+   printf("hello\n");
+   printBigInteger(stdout,C);
+   printf("\n");
+   printf("but here\n");
+
+
+
 }

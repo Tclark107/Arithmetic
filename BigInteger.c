@@ -10,7 +10,7 @@
 #include "List.h"
 #include "BigInteger.h"
 
-#define POWER 4
+#define POWER 2
 #define BASE 100
 
 // private ListObj type
@@ -111,6 +111,17 @@ void negate(BigInteger N) {
 
 // Helper functions -----------------------------------------------------------
 
+// myPow
+// Returns 10 to the power of k.
+int myPow(int k){
+   int pow = 1;
+   while(k > 0) {
+      pow = pow * 10;
+      k--;
+   }
+   return pow;
+}
+
 // charToLong()
 // Returns a long converted from a char charzcter array
 // x is how low the iterator can go, if - or + then 0 or -1 if not.
@@ -124,32 +135,46 @@ long charToLong(char* s, int x, int i) {
    int k = 0;
 
    for(j = i; j > i-POWER; --j, ++k) {
-      printf("i: %d\n", i);
-      printf("j: %d\n", j);
-      //printf("y: %d\n", y);
-      printf("k: %d\n", k);
-
       if(j == x) break;
       digit = j[s];
-      //printf("digit: %c\n", digit);
       idig = digit - '0';
-      //printf("idig: %d\n", idig);
       idig = idig * myPow(k);
       part += idig;
    }
-   printf("part: %ld\n", part);
    return part;
 }
 
-// myPow
-// Returns 10 to the power of k.
-int myPow(int k){
-   int pow = 1;
-   while(k > 0) {
-      pow = pow * 10;
-      k--;
+// addHelper()
+// returns a BigInteger based off of which number is bigger
+BigInteger addHelper(BigInteger S,BigInteger Big,BigInteger Small,int countDown) {
+   long a, b, sum;
+   int flag = 0;
+   moveBack(Big->number);
+   moveBack(Small->number);
+
+   while( index(Big->number)>=0 ) {
+      a = get(Big->number);
+      if(countDown > 0) { 
+         b = get(Small->number);
+         if(flag) {
+            sum = a + b + 1;
+            flag = 0;
+         } else {
+            sum = a + b;
+         }
+         if(sum > BASE) {
+            flag = 1;
+            sum -= 100; // normalize
+         }
+         movePrev(Small->number);
+      } else {
+         sum = a + 0;
+      }
+      prepend(S->number,sum);
+      movePrev(Big->number);
+      countDown--;
    }
-   return pow;
+   return S; 
 }
 
 // BigInteger Arithmetic operations -------------------------------------------
@@ -166,34 +191,17 @@ BigInteger stringToBigInteger(char* s) {
    //implement checks
    BigInteger B = newBigInteger();
    int len = strlen(s); 
-   int i,x,y,z;
+   int i,x;
    long zero = 0;
-   int contLoop; //boolean
 
    if(s[0] == '+' || s[0] == '-') {
       x = 0;
       for( i = len-1; i >= 0; i = i - POWER) {
-         z = 1;
-         y = i-POWER;
-         if(i-POWER+z > x) { // ensures that we wont try to access s oOBounds
-            while(s[i-POWER+z] == '0'){
-               if(z>POWER) {
-                  prepend(B->number,zero);
-                  contLoop = 1;
-                  break;
-               }
-               y = i-POWER+z; // this line is executed POWER times
-               z++;
-            }
-            if(contLoop) continue;
-         }
-         prepend(B->number,charToLong(s,x,i));
-                    
+         prepend(B->number,charToLong(s,x,i));           
       }      
    } else {
       x = -1;
       for(i = len-1; i >= 0; i = i - POWER) {
-         y = i - POWER;
          prepend(B->number,charToLong(s,x,i));        
       } 
    }
@@ -207,7 +215,69 @@ BigInteger stringToBigInteger(char* s) {
 
 // copy()
 // Returns a reference to a new BigInteger object in the same state as N.
-//BigInteger copy(BigInteger N);
+BigInteger copy(BigInteger N) {
+   BigInteger B = newBigInteger();
+   B->sign = N->sign;
+   B->number = copyList(N->number);
+   return B;
+}
+
+// add()
+// Places the sum of A and B in the existing BigInteger S, overwriting its
+// current state: S = A + B
+void add(BigInteger S, BigInteger A, BigInteger B) {
+   makeZero(S);
+   BigInteger K = newBigInteger();
+   K = sum(A,B);
+   S->sign = K->sign;
+   S->number = copyList(K->number);
+
+}
+
+// sum()
+// Returns a reference to a new BigIntegerobject representing A + B.
+BigInteger sum(BigInteger A, BigInteger B) {
+   BigInteger S = newBigInteger();
+   int lenA,lenB;
+
+   lenA = length(A->number);
+   lenB = length(B->number);
+
+   if(lenA > lenB) {
+      S = addHelper(S,A,B,lenB);
+   } else {
+      S = addHelper(S,B,A,lenB);
+   }
+   return S;
+}
+
+// subtract()
+// Places the difference of A and B in the existing BigInteger D, overwriting
+// its current state: D = A - B
+void subtract(BigInteger D, BigInteger A, BigInteger B) {
+  D = diff(A,B); 
+}
+
+// diff()
+// Returns a reference to a new BigInteger object representing A - B.
+BigInteger diff(BigInteger A, BigInteger B) {
+   BigInteger D = newBigInteger();
+   return D;
+}
+
+// multiply()
+// Places the product of A and B in the existing  BigInteger P, overwriting
+// its current state: P = A * B
+void multiply(BigInteger P, BigInteger A, BigInteger B) {
+   P = prod(A,B);
+}
+
+// prod()
+// Returns a reference to a new BigInteger object representing A*B
+BigInteger prod(BigInteger A, BigInteger B) {
+   BigInteger P = newBigInteger();
+   return P;
+}
 
 // Other operations ------------------------------------------------------------
 

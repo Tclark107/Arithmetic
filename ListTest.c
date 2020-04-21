@@ -44,4 +44,8 @@ int main(int argc, char* argv[]){
    printf("\n");
 
    freeList(&A);
+   
+   printf("are we here");
+   int x =numOfDigits(12234);
+   printf("%d\n", x);
 }
